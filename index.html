@@ -112,7 +112,7 @@
         <div>
           <h3>Request path slots</h3>
           <ul>
-            <li><b>Intent router</b> (rules/embeddings/zero‑shot/tiny/LLM)</li>
+            <li><b>Intent router</b> (rules/embeddings/zero-shot/tiny/LLM)</li>
             <li><b>Budget selector</b> (latency/cost/strictness)</li>
             <li><b>Plan compiler</b> (Langflow → DAG)</li>
             <li><b>Scheduler</b> (parallelism + speculative branches + cancel)</li>
@@ -120,6 +120,7 @@
             <li><b>Retriever</b> (vector/lexical/web/graph/hybrid)</li>
             <li><b>Context compressor</b> (prompt condensation + chunk distill)</li>
             <li><b>Generator</b> (model + adapter + decode policy)</li>
+            <li><b>Media generation</b> (text→image / image→image / video; quantized diffusion variants + scheduler selection)</li>
             <li><b>Verifier</b> (schema + factuality + constraints)</li>
             <li><b>Repair engine</b> (targeted regeneration)</li>
           </ul>
@@ -133,6 +134,7 @@
             <li><b>Safety/governance</b> per pack/profile allowlists & redaction</li>
             <li><b>Observability</b> traces + cache hit rates + repair rates</li>
             <li><b>Knowledge updater</b> retrieval refresh OR model editing OR adapter update</li>
+            <li><b>Media verifiers</b> safety filters + watermarking as first-class checks for generated images/video</li>
           </ul>
         </div>
       </div>
@@ -155,6 +157,7 @@
         <li><b>Batching + scheduling</b>: continuous batching to increase throughput.</li>
         <li><b>Disaggregated serving</b>: separate prefill from decode resources so TTFT stays low under load.</li>
         <li><b>Quantization</b>: 4-bit/8-bit inference where acceptable; for training use QLoRA-like methods.</li>
+        <li><b>GPU tiering + diffusion caches</b>: route text→image/image→image/video jobs to tiered GPUs and cache latent/decoded outputs.</li>
       </ul>
 
       <h3>2.3 Advanced inference acceleration (the “esoteric” stuff)</h3>
@@ -163,6 +166,7 @@
         <li><b>Multi-token heads</b> (Medusa-style): predict multiple future tokens per step (when supported).</li>
         <li><b>Token pruning/merging</b>: reduce effective sequence length (token merging ideas exist broadly; ToMe is one example for transformers).</li>
         <li><b>Alternate long-context architectures</b>: state-space models like Mamba can be better for some long-sequence regimes than pure attention.</li>
+        <li><b>Diffusion schedulers</b>: pick sampler and step count per request; reuse quantized variants for speed.</li>
       </ul>
       <div class="small">
         Note: not every trick applies to every model/runtime. The point is: your runtime picks a decode strategy per request/profile.
@@ -365,6 +369,7 @@
             <li>Embeddings + vector DB: retrieval (dense + hybrid)</li>
             <li>Rerankers: cross-encoders or late-interaction</li>
             <li>Inference endpoints / self-host: choose based on latency needs</li>
+            <li>Diffusers endpoints or self-hosted pipelines: text→image, image→image, video generation</li>
           </ul>
         </div>
       </div>
