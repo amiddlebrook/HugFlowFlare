@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
-  <title>Universal Full‑Stack Agentic Architecture — Maximized (Technique Atlas)</title>
+  <title>Universal Full‑Stack Agentic Architecture (Technique Atlas)</title>
   <style>
     :root{--bg:#0b0f14;--fg:#e9eef5;--muted:#b7c2d0;--card:#111823;--accent:#7dd3fc;--accent2:#a7f3d0;--line:#223043;}
     body{margin:0;font-family:ui-sans-serif,system-ui,-apple-system,Segoe UI,Roboto,Arial; background:var(--bg); color:var(--fg); line-height:1.55;}
@@ -40,7 +40,7 @@
 </head>
 <body>
 <header>
-  <h1>Universal Full‑Stack Agentic Architecture — Maximized</h1>
+  <h1>Universal Full‑Stack Agentic Architecture</h1>
   <div class="sub">
     This is a <b>universal</b> runtime you can reuse for any app: “App = UI wrapper + versioned App Pack”.<br/>
     The entire point is to expose <b>every high‑leverage AI/ML trick</b> as a <b>slot</b> the runtime can choose at run‑time (fast/cheap/accurate/safe).
@@ -102,7 +102,7 @@
 
       <rect class="box" x="260" y="40" width="210" height="70" rx="12"/>
       <text class="label" x="280" y="82">Edge Gateway</text>
-      <text class="sub" x="280" y="102">Auth, rate, stream</text>
+      <text class="sub" x="280" y="102">Cloudflare Workers</text>
 
       <rect class="box" x="500" y="40" width="210" height="70" rx="12"/>
       <text class="label" x="520" y="82">Compiler</text>
@@ -110,16 +110,16 @@
 
       <rect class="box" x="740" y="40" width="210" height="70" rx="12"/>
       <text class="label" x="760" y="82">Orchestrator</text>
-      <text class="sub" x="760" y="102">Budgets, cancel</text>
+      <text class="sub" x="760" y="102">Durable Objects</text>
 
       <rect class="box" x="980" y="40" width="190" height="70" rx="12"/>
       <text class="label" x="1000" y="82">Stores</text>
-      <text class="sub" x="1000" y="102">KV / R2 / DB</text>
+      <text class="sub" x="1000" y="102">KV / R2 / D1</text>
 
       <rect class="box" x="120" y="160" width="430" height="150" rx="14"/>
       <text class="label" x="150" y="195">Model / Tool Plane</text>
-      <text class="sub" x="150" y="220">LLMs • Tools • Retrieval • Diffusion</text>
-      <text class="sub" x="150" y="245">Adapters • Quantization • Verifiers</text>
+      <text class="sub" x="150" y="220">HuggingFace LLMs • Tools • Retrieval</text>
+      <text class="sub" x="150" y="245">Diffusers • Adapters • Verifiers</text>
 
       <rect class="box" x="650" y="160" width="430" height="150" rx="14"/>
       <text class="label" x="680" y="195">Ops + Learning</text>
@@ -141,7 +141,7 @@
   </section>
 
     <section id="big">
-      <h2>0) The “Big Shit” (high‑leverage techniques beyond LoRA)</h2>
+      <h2>0) The “Big Knobs” (high‑leverage techniques beyond LoRA)</h2>
       <div class="callout">
         If you want a universal agentic framework, you don’t pick 1 technique —
         you build a runtime that can <b>select among dozens</b> per request, using <b>confidence + budgets + verifiers</b>.
