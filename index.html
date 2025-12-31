@@ -164,6 +164,12 @@
         <li><b>Token pruning/merging</b>: reduce effective sequence length (token merging ideas exist broadly; ToMe is one example for transformers).</li>
         <li><b>Alternate long-context architectures</b>: state-space models like Mamba can be better for some long-sequence regimes than pure attention.</li>
       </ul>
+      <h3>2.4 Static Embeddings slot (offline + cached)</h3>
+      <ul>
+        <li><b>Offline embedding jobs</b>: precompute corpus vectors, batch refresh windows, incremental updates on new docs.</li>
+        <li><b>Versioned embedding stores</b>: keep retriever/reranker compatibility constraints per embedding model version.</li>
+        <li><b>Cache invalidation + re-embed triggers</b>: schema changes, tokenizer or model upgrades, and chunking policy shifts.</li>
+      </ul>
       <div class="small">
         Note: not every trick applies to every model/runtime. The point is: your runtime picks a decode strategy per request/profile.
       </div>
@@ -193,6 +199,13 @@
         <li><b>Long memory</b>: vector store + summary store + structured facts store.</li>
         <li><b>Memory compaction</b>: periodic summarization + key-value extraction (store facts, not transcripts).</li>
         <li><b>Event sourcing</b>: store “facts changed” so downstream tools can react.</li>
+      </ul>
+
+      <h3>3.4 Static Embeddings slot (retrieval backbone)</h3>
+      <ul>
+        <li><b>Offline embedding jobs</b>: precompute corpus vectors, batch refresh windows, incremental updates on new docs.</li>
+        <li><b>Versioned embedding stores</b>: enforce retriever/reranker compatibility constraints per embedding model version.</li>
+        <li><b>Cache invalidation + re-embed triggers</b>: schema changes, tokenizer or model upgrades, and chunking policy shifts.</li>
       </ul>
     </section>
 
@@ -352,9 +365,9 @@
           <ul>
             <li>Workers: API gateway, request normalization, SSE streaming</li>
             <li>Durable Objects: session state, in-flight dedupe locks, orchestration state</li>
-            <li>Queues: background tool runs, retriever indexing, eval jobs</li>
+            <li>Queues: background tool runs, retriever indexing, eval jobs, offline embedding refresh</li>
             <li>KV: hot caches (router results, small tool outputs)</li>
-            <li>R2: artifacts, traces, compiled plans, large tool dumps</li>
+            <li>R2: artifacts, traces, compiled plans, embedding job manifests/artifacts</li>
           </ul>
         </div>
         <div>
@@ -362,7 +375,7 @@
           <ul>
             <li>Transformers + PEFT: skill adapters (LoRA/QLoRA/IA³/prompt tuning)</li>
             <li>Text classification: zero-shot classifier nodes</li>
-            <li>Embeddings + vector DB: retrieval (dense + hybrid)</li>
+            <li>Embeddings + vector DB: retrieval (dense + hybrid), versioned embedding stores</li>
             <li>Rerankers: cross-encoders or late-interaction</li>
             <li>Inference endpoints / self-host: choose based on latency needs</li>
           </ul>
