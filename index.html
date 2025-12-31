@@ -317,6 +317,13 @@
         <li>Pack-level allowlists, tool permissions, redaction policies, audit logs.</li>
         <li>Different safety modes per profile: strict (enterprise) vs relaxed (creative).</li>
       </ul>
+
+      <h3>8.4 Retrieval training + lifecycle</h3>
+      <ul>
+        <li><b>Training data generation</b>: positive/negative pairs, hard negatives, and query rewriting for retrieval supervision.</li>
+        <li><b>Embedding eval cadence</b>: periodic model checks on retrieval metrics (MRR, nDCG) before promotion.</li>
+        <li><b>Embedding rollout & back‑compat</b>: versioned indexes, migration jobs, and fallback paths for legacy embeddings.</li>
+      </ul>
     </section>
 
     <section id="eval">
