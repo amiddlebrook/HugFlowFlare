@@ -364,6 +364,7 @@
         <li>Regression suites per App Pack (golden inputs + required outputs).</li>
         <li>Shadow runs: test new router/graph/model without affecting production output.</li>
         <li>Judge models: use as one signal, not the only truth (calibrate periodically).</li>
+        <li>Distributed eval workloads: shard datasets across workers to keep coverage high without blocking releases.</li>
       </ul>
 
       <h3>9.3 Distillation loop</h3>
@@ -404,6 +405,12 @@
       <ul>
         <li>Design flows visually, but <b>compile</b> them into deterministic plans: parallel groups, caches, cancellation, and budgets.</li>
         <li>Add standard nodes: RouterEnsemble, RetrievalEvaluator, PromptCompressor, Verifier, Repair, ArtifactWriter.</li>
+      </ul>
+
+      <h3>Batch/Distributed Compute</h3>
+      <ul>
+        <li>Dask/Ray/Spark-style execution for indexing backfills, embedding refreshes, and large eval loops.</li>
+        <li>Orchestrate with queues + schedulers, autoscale workers for bursty jobs, and enforce cost caps on long-running runs.</li>
       </ul>
     </section>
 
