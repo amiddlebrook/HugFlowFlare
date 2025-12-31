@@ -72,7 +72,7 @@
   </nav>
 
   <div>
-    <section id="arch" style="margin-top:16px">
+  <section id="arch" style="margin-top:16px">
   <h2>Architecture (Full‑Stack Universal Runtime)</h2>
   <div class="callout">
     This diagram is the canonical layout: <b>UI → Edge Gateway → Compiler → Orchestrator → Stores → Model/Tool Plane → Ops/Learning</b>.
@@ -450,6 +450,41 @@
 
     <section id="impl">
       <h2>10) Langflow + Cloudflare + HuggingFace mapping (concrete)</h2>
+      <div style="border:1px solid var(--line); border-radius:14px; overflow:hidden; background:#0c1320; padding:12px; margin-bottom:12px">
+        <svg viewBox="0 0 1000 420" role="img" aria-label="Section 10 mapping diagram for Langflow, Cloudflare, and HuggingFace" style="display:block;width:100%;height:auto">
+          <defs>
+            <marker id="arrow10" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+              <path d="M 0 0 L 10 5 L 0 10 z" fill="#7dd3fc"/>
+            </marker>
+            <style>
+              .box10{fill:#0f1722;stroke:#223043;stroke-width:2}
+              .label10{fill:#e9eef5;font:600 18px ui-sans-serif,system-ui}
+              .sub10{fill:#b7c2d0;font:500 13px ui-sans-serif,system-ui}
+              .arrow10{stroke:#7dd3fc;stroke-width:3;fill:none;marker-end:url(#arrow10)}
+            </style>
+          </defs>
+
+          <rect class="box10" x="40" y="80" width="280" height="90" rx="12"/>
+          <text class="label10" x="60" y="120">Langflow</text>
+          <text class="sub10" x="60" y="145">Graph → DAG</text>
+
+          <rect class="box10" x="360" y="80" width="280" height="90" rx="12"/>
+          <text class="label10" x="380" y="120">Cloudflare</text>
+          <text class="sub10" x="380" y="145">Workers + DOs</text>
+
+          <rect class="box10" x="680" y="80" width="280" height="90" rx="12"/>
+          <text class="label10" x="700" y="120">HuggingFace</text>
+          <text class="sub10" x="700" y="145">Models + Tools</text>
+
+          <rect class="box10" x="200" y="230" width="600" height="90" rx="12"/>
+          <text class="label10" x="220" y="270">Batch / Distributed Compute</text>
+          <text class="sub10" x="220" y="295">Queues • Ray/Dask • R2</text>
+
+          <path class="arrow10" d="M 320 125 L 360 125"/>
+          <path class="arrow10" d="M 640 125 L 680 125"/>
+          <path class="arrow10" d="M 500 170 L 500 230"/>
+        </svg>
+      </div>
       <div class="two">
         <div>
           <h3>Cloudflare (control plane + edge runtime)</h3>
@@ -497,6 +532,52 @@
 
     <section id="stock">
       <h2>11) StockCommand overlay (example App Pack)</h2>
+      <div style="border:1px solid var(--line); border-radius:14px; overflow:hidden; background:#0c1320; padding:12px; margin-bottom:12px">
+        <svg viewBox="0 0 1000 420" role="img" aria-label="Section 11 StockCommand overlay diagram" style="display:block;width:100%;height:auto">
+          <defs>
+            <marker id="arrow11" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+              <path d="M 0 0 L 10 5 L 0 10 z" fill="#7dd3fc"/>
+            </marker>
+            <style>
+              .box11{fill:#0f1722;stroke:#223043;stroke-width:2}
+              .label11{fill:#e9eef5;font:600 18px ui-sans-serif,system-ui}
+              .sub11{fill:#b7c2d0;font:500 13px ui-sans-serif,system-ui}
+              .arrow11{stroke:#7dd3fc;stroke-width:3;fill:none;marker-end:url(#arrow11)}
+            </style>
+          </defs>
+
+          <rect class="box11" x="40" y="80" width="260" height="80" rx="12"/>
+          <text class="label11" x="60" y="115">Intents</text>
+          <text class="sub11" x="60" y="140">screeners • thesis</text>
+
+          <rect class="box11" x="340" y="80" width="280" height="80" rx="12"/>
+          <text class="label11" x="360" y="115">Retrieval</text>
+          <text class="sub11" x="360" y="140">filings • news</text>
+
+          <rect class="box11" x="660" y="80" width="300" height="80" rx="12"/>
+          <text class="label11" x="680" y="115">Compute Gate</text>
+          <text class="sub11" x="680" y="140">shallow vs deep</text>
+
+          <rect class="box11" x="120" y="210" width="300" height="90" rx="12"/>
+          <text class="label11" x="140" y="250">Skills</text>
+          <text class="sub11" x="140" y="275">finance adapters</text>
+
+          <rect class="box11" x="460" y="210" width="360" height="90" rx="12"/>
+          <text class="label11" x="480" y="250">Verifiers</text>
+          <text class="sub11" x="480" y="275">citations • math</text>
+
+          <rect class="box11" x="300" y="330" width="400" height="70" rx="12"/>
+          <text class="label11" x="320" y="370">Artifacts</text>
+          <text class="sub11" x="320" y="395">reports • charts</text>
+
+          <path class="arrow11" d="M 300 120 L 340 120"/>
+          <path class="arrow11" d="M 620 120 L 660 120"/>
+          <path class="arrow11" d="M 480 160 L 300 210"/>
+          <path class="arrow11" d="M 780 160 L 640 210"/>
+          <path class="arrow11" d="M 420 300 L 420 330"/>
+          <path class="arrow11" d="M 640 300 L 640 330"/>
+        </svg>
+      </div>
       <ul>
         <li><b>Intents</b>: screeners, news digest, thesis builder, valuation, risk overlay, divergence/technical, portfolio actions.</li>
         <li><b>Retrieval</b>: hybrid (filings/news/earnings + web), plus CRAG-style evaluator to detect bad retrieval.</li>
@@ -510,17 +591,21 @@
     <section>
       <h2>References (starter set)</h2>
       <ul>
-        <li>LLMLingua prompt compression (arXiv:2310.05736)</li>
-        <li>Self-RAG (arXiv:2310.11511)</li>
-        <li>CRAG (arXiv:2401.15884)</li>
-        <li>RAG-Fusion (arXiv:2402.03367)</li>
-        <li>RAPTOR (arXiv:2401.18059)</li>
-        <li>HyDE (arXiv:2212.10496)</li>
-        <li>FrugalGPT cascades (arXiv:2305.05176)</li>
-        <li>QLoRA (arXiv:2305.14314)</li>
-        <li>Switch Transformers (arXiv:2101.03961)</li>
-        <li>Mamba SSM (arXiv:2312.00752)</li>
-        <li>DPO preference optimization (arXiv:2305.18290)</li>
+        <li><a href="https://arxiv.org/abs/2310.05736">LLMLingua prompt compression (arXiv:2310.05736)</a></li>
+        <li><a href="https://arxiv.org/abs/2310.11511">Self-RAG (arXiv:2310.11511)</a></li>
+        <li><a href="https://arxiv.org/abs/2401.15884">CRAG (arXiv:2401.15884)</a></li>
+        <li><a href="https://arxiv.org/abs/2402.03367">RAG-Fusion (arXiv:2402.03367)</a></li>
+        <li><a href="https://arxiv.org/abs/2401.18059">RAPTOR (arXiv:2401.18059)</a></li>
+        <li><a href="https://arxiv.org/abs/2212.10496">HyDE (arXiv:2212.10496)</a></li>
+        <li><a href="https://arxiv.org/abs/2305.05176">FrugalGPT cascades (arXiv:2305.05176)</a></li>
+        <li><a href="https://arxiv.org/abs/2305.14314">QLoRA (arXiv:2305.14314)</a></li>
+        <li><a href="https://arxiv.org/abs/2101.03961">Switch Transformers (arXiv:2101.03961)</a></li>
+        <li><a href="https://arxiv.org/abs/2312.00752">Mamba SSM (arXiv:2312.00752)</a></li>
+        <li><a href="https://arxiv.org/abs/2305.18290">DPO preference optimization (arXiv:2305.18290)</a></li>
+        <li><a href="https://arxiv.org/abs/2308.09711">Speculative decoding (arXiv:2308.09711)</a></li>
+        <li><a href="https://arxiv.org/abs/2401.12391">Medusa multi-token heads (arXiv:2401.12391)</a></li>
+        <li><a href="https://arxiv.org/abs/2210.09461">ToMe token merging (arXiv:2210.09461)</a></li>
+        <li><a href="https://arxiv.org/abs/2009.00201">AdapterFusion (arXiv:2009.00201)</a></li>
       </ul>
       <div class="small">
         This document is designed to be implementation-oriented. If you want, the next iteration can expand each reference into “how to implement in your stack” code snippets + Langflow node specs.
