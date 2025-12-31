@@ -169,7 +169,7 @@
         <div>
           <h3>Request path slots</h3>
           <ul>
-            <li><b>Intent router</b> (rules/embeddings/zero‑shot/tiny/LLM)</li>
+            <li><b>Intent router</b> (rules/embeddings/zero-shot/tiny/LLM)</li>
             <li><b>Budget selector</b> (latency/cost/strictness)</li>
             <li><b>Plan compiler</b> (Langflow → DAG)</li>
             <li><b>Scheduler</b> (parallelism + speculative branches + cancel)</li>
@@ -178,7 +178,7 @@
             <li><b>Embedding index selector</b> (static vs. live embeddings + version choice)</li>
             <li><b>Context compressor</b> (prompt condensation + chunk distill)</li>
             <li><b>Generator</b> (model + adapter + decode policy)</li>
-            <li><b>Media generator</b> (diffusion/image/video + safety filters)</li>
+            <li><b>Media generation</b> (text→image / image→image / video; quantized diffusion variants + scheduler selection)</li>
             <li><b>Verifier</b> (schema + factuality + constraints)</li>
             <li><b>Repair engine</b> (targeted regeneration)</li>
           </ul>
@@ -193,6 +193,7 @@
             <li><b>Safety/governance</b> per pack/profile allowlists & redaction</li>
             <li><b>Observability</b> traces + cache hit rates + repair rates</li>
             <li><b>Knowledge updater</b> retrieval refresh OR model editing OR adapter update</li>
+            <li><b>Media verifiers</b> safety filters + watermarking as first-class checks for generated images/video</li>
           </ul>
         </div>
       </div>
@@ -215,6 +216,7 @@
         <li><b>Batching + scheduling</b>: continuous batching to increase throughput.</li>
         <li><b>Disaggregated serving</b>: separate prefill from decode resources so TTFT stays low under load.</li>
         <li><b>Quantization</b>: 4-bit/8-bit inference where acceptable; for training use QLoRA-like methods.</li>
+        <li><b>GPU tiering + diffusion caches</b>: route text→image/image→image/video jobs to tiered GPUs and cache latent/decoded outputs.</li>
       </ul>
 
       <h3>2.3 Advanced inference acceleration (the “esoteric” stuff)</h3>
@@ -223,6 +225,13 @@
         <li><b>Multi-token heads</b> (Medusa-style): predict multiple future tokens per step (when supported).</li>
         <li><b>Token pruning/merging</b>: reduce effective sequence length (token merging ideas exist broadly; ToMe is one example for transformers).</li>
         <li><b>Alternate long-context architectures</b>: state-space models like Mamba can be better for some long-sequence regimes than pure attention.</li>
+        <li><b>Diffusion schedulers</b>: pick sampler and step count per request; reuse quantized variants for speed.</li>
+      </ul>
+      <h3>2.4 Static Embeddings slot (offline + cached)</h3>
+      <ul>
+        <li><b>Offline embedding jobs</b>: precompute corpus vectors, batch refresh windows, incremental updates on new docs.</li>
+        <li><b>Versioned embedding stores</b>: keep retriever/reranker compatibility constraints per embedding model version.</li>
+        <li><b>Cache invalidation + re-embed triggers</b>: schema changes, tokenizer or model upgrades, and chunking policy shifts.</li>
       </ul>
       <div class="small">
         Note: not every trick applies to every model/runtime. The point is: your runtime picks a decode strategy per request/profile.
@@ -262,11 +271,11 @@
         <li><b>Event sourcing</b>: store “facts changed” so downstream tools can react.</li>
       </ul>
 
-      <h3>3.4 Embedding model lifecycle (static + trainable)</h3>
+      <h3>3.4 Static Embeddings slot (retrieval backbone)</h3>
       <ul>
-        <li><b>Static embedding builds</b>: precompute embeddings, store versioned indexes, and map retrievers to index versions.</li>
-        <li><b>Sentence-transformer training</b>: hard-negative mining, domain pairs, and periodic retrieval metric evals (MRR/nDCG).</li>
-        <li><b>Rollout policy</b>: canary embedding indexes, rollback on recall regressions, and back-compat for cached queries.</li>
+        <li><b>Offline embedding jobs</b>: precompute corpus vectors, batch refresh windows, incremental updates on new docs.</li>
+        <li><b>Versioned embedding stores</b>: enforce retriever/reranker compatibility constraints per embedding model version.</li>
+        <li><b>Cache invalidation + re-embed triggers</b>: schema changes, tokenizer or model upgrades, and chunking policy shifts.</li>
       </ul>
     </section>
 
@@ -339,6 +348,12 @@
       <ul>
         <li>Each adapter is a <b>Skill</b> with: intent tags, strength, safety profile, eval suite, and fallback chain.</li>
         <li>Router chooses skill; verifier monitors drift; distiller suggests new skills from frequent “expensive paths”.</li>
+        <li><b>Adapter registry</b> with compatibility metadata (base model, quantization, tokenizer) to avoid mismatches.</li>
+        <li><b>Hot-load adapters</b> with eviction policies (LRU/usage-based) for tight GPU memory budgets.</li>
+        <li>
+          <b>Per-request adapter selection</b> with fallbacks when memory budgets are exceeded; cache merged adapters for
+          frequently combined stacks.
+        </li>
       </ul>
 
       <h3>6.3 Multi‑LoRA serving mechanics</h3>
@@ -398,6 +413,13 @@
         <li>Pack-level allowlists, tool permissions, redaction policies, audit logs.</li>
         <li>Different safety modes per profile: strict (enterprise) vs relaxed (creative).</li>
       </ul>
+
+      <h3>8.4 Retrieval training + lifecycle</h3>
+      <ul>
+        <li><b>Training data generation</b>: positive/negative pairs, hard negatives, and query rewriting for retrieval supervision.</li>
+        <li><b>Embedding eval cadence</b>: periodic model checks on retrieval metrics (MRR, nDCG) before promotion.</li>
+        <li><b>Embedding rollout & back‑compat</b>: versioned indexes, migration jobs, and fallback paths for legacy embeddings.</li>
+      </ul>
     </section>
 
     <section id="eval">
@@ -415,7 +437,7 @@
         <li>Regression suites per App Pack (golden inputs + required outputs).</li>
         <li>Shadow runs: test new router/graph/model without affecting production output.</li>
         <li>Judge models: use as one signal, not the only truth (calibrate periodically).</li>
-        <li>Distributed evals: scale large test suites with batch compute (Dask/Ray/Spark-style).</li>
+        <li>Distributed eval workloads: shard datasets across workers to keep coverage high without blocking releases.</li>
       </ul>
 
       <h3>9.3 Distillation loop</h3>
@@ -434,9 +456,9 @@
           <ul>
             <li>Workers: API gateway, request normalization, SSE streaming</li>
             <li>Durable Objects: session state, in-flight dedupe locks, orchestration state</li>
-            <li>Queues: background tool runs, retriever indexing, eval jobs</li>
+            <li>Queues: background tool runs, retriever indexing, eval jobs, offline embedding refresh</li>
             <li>KV: hot caches (router results, small tool outputs)</li>
-            <li>R2: artifacts, traces, compiled plans, large tool dumps</li>
+            <li>R2: artifacts, traces, compiled plans, embedding job manifests/artifacts</li>
           </ul>
         </div>
         <div>
@@ -444,10 +466,11 @@
           <ul>
             <li>Transformers + PEFT: skill adapters (LoRA/QLoRA/IA³/prompt tuning)</li>
             <li>Text classification: zero-shot classifier nodes</li>
-            <li>Embeddings + vector DB: retrieval (dense + hybrid)</li>
+            <li>Embeddings + vector DB: retrieval (dense + hybrid), versioned embedding stores</li>
             <li>Rerankers: cross-encoders or late-interaction</li>
             <li>Diffusers: quantized diffusion pipelines for image/video generation</li>
             <li>Inference endpoints / self-host: choose based on latency needs</li>
+            <li>Diffusers endpoints or self-hosted pipelines: text→image, image→image, video generation</li>
           </ul>
         </div>
       </div>
@@ -463,6 +486,12 @@
       <ul>
         <li>Design flows visually, but <b>compile</b> them into deterministic plans: parallel groups, caches, cancellation, and budgets.</li>
         <li>Add standard nodes: RouterEnsemble, RetrievalEvaluator, PromptCompressor, Verifier, Repair, ArtifactWriter.</li>
+      </ul>
+
+      <h3>Batch/Distributed Compute</h3>
+      <ul>
+        <li>Dask/Ray/Spark-style execution for indexing backfills, embedding refreshes, and large eval loops.</li>
+        <li>Orchestrate with queues + schedulers, autoscale workers for bursty jobs, and enforce cost caps on long-running runs.</li>
       </ul>
     </section>
 
